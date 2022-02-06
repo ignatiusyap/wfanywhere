@@ -12,5 +12,13 @@ class MerchantData(APIView):
         shops = Shops.objects.all()
         serializer = MerchantSerializer(shops, many=True)
 
- #       return Response(serializer.data)
-        return HttpResponse("it works")
+        return Response(serializer.data)
+ #       return HttpResponse("it works")
+
+
+class MerchantDetails(APIView):
+    def get(self, request, pk):
+        shops = Shops.objects.get(id=pk)
+        serializer = MerchantSerializer(shops, many=False)
+
+        return Response(serializer.data)
