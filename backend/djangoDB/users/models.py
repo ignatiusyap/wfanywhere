@@ -19,27 +19,27 @@ from django.db import models
 
 class Type(models.Model):
     userType = models.CharField(max_length=9, primary_key=True)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
 
 class Account(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
-    shop_id = models.ForeignKey(Shops, null=True, on_delete=models.SET_NULL)
-    user_type = models.ForeignKey(Type, null=True, on_delete=models.SET_NULL)
+    shop_id = models.ForeignKey(Shops, on_delete=models.SET_NULL, null=True)
+    user_type = models.ForeignKey(Type, on_delete=models.SET_NULL, null=True)
     username = models.CharField(max_length=20)
-    first_name = models.CharField(max_length=20, null=True)
-    last_name = models.CharField(max_length=20, null=True)
-    phone_number = models.IntegerField(null=True)
-    occupation = models.CharField(max_length=20, null=True)
-    email = models.EmailField(max_length=254, null=True)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    phone_number = models.IntegerField()
+    occupation = models.CharField(max_length=20)
+    email = models.EmailField(max_length=254)
+    date_created = models.DateTimeField(auto_now_add=True)
 
 
 class Review(models.Model):
     id = models.UUIDField(
         primary_key=True, default=uuid.uuid4, editable=False)
-    shop_id = models.ForeignKey(Shops, null=True, on_delete=models.SET_NULL)
-    user_id = models.ForeignKey(Account, null=True, on_delete=models.SET_NULL)
-    review = models.TextField(null=True)
-    rating = models.IntegerField(null=True)
+    shop_id = models.ForeignKey(Shops, on_delete=models.SET_NULL, null=True)
+    user_id = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
+    review = models.TextField
+    rating = models.IntegerField
