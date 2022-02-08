@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import numpy as np
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import MerchantSerializer
@@ -9,7 +10,7 @@ from django.http import Http404, HttpResponse
 
 class MerchantData(APIView):
     def get(self, request):
-        shops = Shops.objects.all()
+        shops = Shops.objects.filter(is_active=True)
         serializer = MerchantSerializer(shops, many=True)
 
         return Response(serializer.data)
@@ -22,3 +23,12 @@ class MerchantDetails(APIView):
         serializer = MerchantSerializer(shops, many=False)
 
         return Response(serializer.data)
+
+
+class MerchantCreate(APIView):
+    # pk pass from the front end
+    def post(self, request):
+        serializer = MerchantSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)

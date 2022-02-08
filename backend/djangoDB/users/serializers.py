@@ -6,3 +6,9 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = '__all__'
+
+    def create(self, data):
+        UserModel = Account
+        User = UserModel.objects.create_user(**data)
+        User.save()
+        return User

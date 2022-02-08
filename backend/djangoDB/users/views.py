@@ -1,3 +1,4 @@
+from argparse import Action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import AccountSerializer
@@ -8,9 +9,9 @@ from django.http import Http404, HttpResponse
 # Create your views here.
 
 
-class AccountsData(APIView):
+class ShopAccountsData(APIView):
     def get(self, request):
-        users = Account.objects.all()
+        users = Account.objects.filter(is_active=True)
         serializer = AccountSerializer(users, many=True)
 
         return Response(serializer.data)
@@ -28,10 +29,11 @@ class AccountDetails(APIView):
 
 class AccountCreate(APIView):
     def post(self, request):
+
         serializer = AccountSerializer(data=request.data)
-        print(serializer)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         else:
-            return Response(False)
+            return Response("Account not created")
