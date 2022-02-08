@@ -1,22 +1,21 @@
-import React, { useState, useReducer, useEffect } from "react";
+import React from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const DisplayResultsUser = (props) => {
-  const state = props.apiCalledState;
+  let history = useHistory();
+  const clickForDetailedView = () => {
+    history.push(`merchants/shop/${props.apiCalledState.id}`);
+    props.liftState(props.apiCalledState);
+  };
   return (
-    <>
-      <div className="display-results-header">{props.title}</div>
-      {/* {state.map((each) => {
-        return (
-          <div>
-            <div className="result-header">{each.shop_name}</div>
-            <div>
-              <img src={each.image_url} alt={props.imgDescription} />
-            </div>
-          </div>
-        );
-      })} */}
-      {console.log("hello", state)}
-    </>
+    <div onClick={clickForDetailedView}>
+      <div>
+        <img src={props.apiCalledState.image_url} alt={props.imgDescription} />
+      </div>
+      <div>
+        <div className="result-header">{props.apiCalledState.shop_name}</div>
+      </div>
+    </div>
   );
 };
 

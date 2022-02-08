@@ -7,8 +7,15 @@ import MerchantSignup from "./Pages/signup/MerchantSignup";
 import HomeUser from "./Pages/homepageuser/HomeUser";
 import About from "./Pages/landingpage/About";
 import HomeMerchant from "./Pages/homepagemerchant/HomeMerchant";
+import ShopDetails from "./Pages/merchantdetailedview/ShopDetails";
+import { useState } from "react";
 
 function App() {
+  const [shopID, setShopID] = useState();
+  const retrieveState = (state) => {
+    setShopID(state.id);
+  };
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -19,17 +26,20 @@ function App() {
           <Route exact path="/login">
             <Login />
           </Route>
-          <Route exact path="/signup">
+          <Route exact path="/user/create-account">
             <Signup />
           </Route>
-          <Route exact path="/signup/merchant">
+          <Route exact path="/merchant/create-account">
             <MerchantSignup />
           </Route>
-          <Route exact path="/user/home">
-            <HomeUser />
+          <Route exact path="/users/home">
+            <HomeUser liftState={retrieveState} />
           </Route>
           <Route exact path="/merchant/home">
             <HomeMerchant />
+          </Route>
+          <Route exact path={`/users/merchants/shop/${shopID}`}>
+            <ShopDetails />
           </Route>
         </Switch>
       </BrowserRouter>
