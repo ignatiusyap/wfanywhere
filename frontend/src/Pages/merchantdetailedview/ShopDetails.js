@@ -1,9 +1,10 @@
 import React from "react";
 
-const ShopDetails = () => {
+const ShopDetails = (props) => {
+  const shop = props.details;
   return (
     <>
-      <div>shop details</div>
+      <div>{shop.shop_name}</div>
     </>
   );
 };

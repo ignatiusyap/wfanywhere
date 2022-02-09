@@ -11,9 +11,10 @@ import ShopDetails from "./Pages/merchantdetailedview/ShopDetails";
 import { useState } from "react";
 
 function App() {
-  const [shopID, setShopID] = useState();
+  const [shopDetails, setShopDetails] = useState("");
   const retrieveState = (state) => {
-    setShopID(state.id);
+    console.log(state);
+    setShopDetails(state);
   };
 
   return (
@@ -38,8 +39,8 @@ function App() {
           <Route exact path="/merchant/home">
             <HomeMerchant />
           </Route>
-          <Route exact path={`/users/merchants/shop/${shopID}`}>
-            <ShopDetails />
+          <Route exact path={`/users/merchants/shop/${shopDetails.id}`}>
+            <ShopDetails details={shopDetails} />
           </Route>
         </Switch>
       </BrowserRouter>
