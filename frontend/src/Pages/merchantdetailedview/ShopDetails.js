@@ -1,11 +1,83 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import Review from "../writereview/Review";
+import { v4 as uuidv4 } from "uuid";
+import Statecontext from "../../context/state-context";
+import jwt from "jwt-decode";
+import DisplayReview from "./DisplayReview";
 
 const ShopDetails = (props) => {
+  const [allReviews, setAllReviews] = useState([]);
+  const [userData, setUserData] = useState([]);
+  let { shopId } = useParams();
+  const { userToken } = useContext(Statecontext);
   const shop = props.details;
+
+  useEffect(() => {
+    axios
+      .get(`http://127.0.0.1:8000/users/merchants/shop/review/${shopId}/`)
+      .then((res) => {
+        if (!res.data) {
+          alert("backend issue");
+        } else {
+          setAllReviews(res.data);
+        }
+      });
+
+    axios
+      .get(
+        `http://127.0.0.1:8000/users/profile-page/${jwt(userToken).user_id}/`
+      )
+      .then((res) => {
+        if (!res.data) {
+          alert("backend issue");
+        } else {
+          setUserData(res.data);
+        }
+      });
+  }, []);
+  // const allReviewDetails = [];
+  // const editReview = () => {};
+  // const deleteReview = () => {};
+  // allReviews.map((each) => {
+  //   return allReviewDetails.push(
+  //     <div>
+  //       <div>
+  //         {each.name} {each.surname}
+  //       </div>
+  //       <div>Review: {each.review}</div>
+  //       <div>Rating{each.rating}</div>
+  //       {each.user_id === jwt(userToken).user_id && (
+  //         <>
+  //           <button onClick={editReview}>Edit</button>
+  //           <button onClick={deleteReview}>Delete</button>
+  //         </>
+  //       )}
+  //     </div>
+  //   );
+  // });
+
   return (
-    <>
+    <div>
       <div>{shop.shop_name}</div>
-    </>
+      <div>
+        <img src={shop.image_url} alt="shop" />
+      </div>
+      {/* <div>{allReviewDetails}</div> */}
+      <DisplayReview
+        key={uuidv4()}
+        allReviews={allReviews}
+        userToken={userToken}
+      />
+      <Review
+        shopId={shopId}
+        key={uuidv4()}
+        userToken={userToken}
+        name={userData.name}
+        surname={userData.surname}
+      />
+    </div>
   );
 };
 

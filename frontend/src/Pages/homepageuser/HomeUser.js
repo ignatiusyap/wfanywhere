@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import DisplayResultsUser from "../../components/DisplayResultsUser";
+import { v4 as uuidv4 } from "uuid";
 
 const HomeUser = (props) => {
   useEffect(() => {
@@ -18,22 +19,19 @@ const HomeUser = (props) => {
         }
       });
   };
-  const randomShops = () => {
-    const shopArray = [];
-    shops.forEach((element) => {
-      shopArray.push(
-        <>
-          <DisplayResultsUser
-            apiCalledState={element}
-            imgDescription="Shop Images"
-            liftState={props.liftState}
-          />
-        </>
-      );
-    });
-    const randomShops = shopArray.sort(() => Math.random() - 0.5);
-    return randomShops;
-  };
+
+  const shopArray = [];
+  shops.forEach((element) => {
+    shopArray.push(
+      <DisplayResultsUser
+        apiCalledState={element}
+        imgDescription="Shop Images"
+        liftState={props.liftState}
+        key={uuidv4()}
+      />
+    );
+  });
+  const randomShops = shopArray.sort(() => Math.random() - 0.5);
 
   return (
     <>
@@ -41,7 +39,7 @@ const HomeUser = (props) => {
       {/* <DisplayResultsUser apiCalledState={} title ="Most Visited"/> */}
       <div>
         <div className="display-results-header">Explore New Places</div>
-        {randomShops()}
+        {randomShops}
       </div>
 
       {/* <DisplayResultsUser apiCalledState={} title ="Other Users Top Picks"/> */}

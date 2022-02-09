@@ -28,9 +28,9 @@ const changeInput = (input, action) => {
 const MerchantSignup = () => {
   let history = useHistory();
 
-  const [shopName, setShopName] = useState();
+  const [shopName, setShopName] = useState("");
+  const [retypePassword, setRetypePassword] = useState("");
   const [input, dispatchInput] = useReducer(changeInput, {
-    shop_id: "",
     user_type: "Merchant",
     name: "",
     surname: "",
@@ -40,19 +40,33 @@ const MerchantSignup = () => {
     password: "",
   });
 
-  const handleSignUp = (e) => {
+  const passwordValidation = (e) => {
     e.preventDefault();
+    if (input.password !== retypePassword) {
+      alert("Password do not match");
+    } else {
+      const shopNameToSendBack = { shop_name: shopName };
+      axios
+        .post(
+          "http://localhost:8000/users/merchants/shop-name/",
+          shopNameToSendBack
+        )
+        .then((res) => {
+          if (!res.data) {
+            alert("Something wrong");
+          } else {
+            handleSignUp(res.data.id);
+          }
+        });
+    }
+  };
+  const handleSignUp = (id) => {
+    const finalInputSendBack = {
+      ...input,
+      shop_id: id,
+    };
     axios
-      .post("http://localhost:8000/users/create-account/", input)
-      .then((res) => {
-        if (!res.data) {
-          alert("Something wrong");
-        } else {
-          history.push("/");
-        }
-      });
-    axios
-      .post("http://localhost:8000/merchant/shop-name/", shopName)
+      .post("http://localhost:8000/users/create-account/", finalInputSendBack)
       .then((res) => {
         if (!res.data) {
           alert("Something wrong");
@@ -67,9 +81,9 @@ const MerchantSignup = () => {
       <form>
         <input
           type="text"
-          value={shopName?.shop_name}
+          value={shopName}
           onChange={(event) => {
-            setShopName({ shop_name: event.target.value });
+            setShopName(event.target.value);
           }}
           placeholder="Merchant Name"
         />
@@ -130,17 +144,14 @@ const MerchantSignup = () => {
         />
         <input
           type="password"
-          value={input.retypePassword}
+          value={retypePassword}
           onChange={(event) => {
-            dispatchInput({
-              type: "Retype Password",
-              payload: { input: event.target.value },
-            });
+            setRetypePassword(event.target.value);
           }}
           placeholder="Retype Password"
         />
       </form>
-      <button onClick={handleSignUp}>Sign Up</button>
+      <button onClick={passwordValidation}>Sign Up</button>
       {console.log(input)}
       {console.log(shopName)}
     </>

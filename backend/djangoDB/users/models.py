@@ -80,5 +80,8 @@ class Review(models.Model):
         primary_key=True, default=uuid.uuid4, editable=False)
     shop_id = models.ForeignKey(Shops, on_delete=models.SET_NULL, null=True)
     user_id = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
-    review = models.TextField
-    rating = models.IntegerField
+    review = models.TextField(default="")
+    rating = models.IntegerField(default="")
+    name = models.CharField(max_length=20, default=False)
+    surname = models.CharField(max_length=20, default=False)
+    is_active = models.BooleanField(default=True)

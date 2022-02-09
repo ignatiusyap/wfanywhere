@@ -16,3 +16,9 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+    # def post(self, request):
+
+    #     response = super().post(request)
+    #     response.data['name'] = "hello"
+    #     return response

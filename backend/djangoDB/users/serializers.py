@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Account
+from .models import Account, Review
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -12,3 +12,9 @@ class AccountSerializer(serializers.ModelSerializer):
         User = UserModel.objects.create_user(**data)
         User.save()
         return User
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'

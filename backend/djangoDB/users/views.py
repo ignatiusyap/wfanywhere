@@ -1,7 +1,7 @@
 from argparse import Action
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import AccountSerializer
+from .serializers import *
 from .models import *
 from django.http import Http404, HttpResponse
 
@@ -36,4 +36,25 @@ class AccountCreate(APIView):
             serializer.save()
             return Response(serializer.data)
         else:
+            return Response("Account not created")
+
+
+class ReviewsAll(APIView):
+    def get(self, request, pk):
+        reviews = Review.objects.filter(
+            is_active=True, shop_id=pk)
+
+        serializer = ReviewSerializer(reviews, many=True)
+
+        return Response(serializer.data)
+
+    def post(self, request, pk):
+        serializer = ReviewSerializer(data=request.data)
+        # serializer.is_valid()
+        # print(serializer.errors)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+
             return Response("Account not created")
