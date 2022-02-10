@@ -42,7 +42,7 @@ class AccountCreate(APIView):
 class ReviewsAll(APIView):
     def get(self, request, pk):
         reviews = Review.objects.filter(
-            is_active=True, shop_id=pk)
+            is_active=True, shop_id=pk).order_by('created_at')
 
         serializer = ReviewSerializer(reviews, many=True)
 
@@ -58,3 +58,23 @@ class ReviewsAll(APIView):
         else:
 
             return Response("Account not created")
+
+
+class ReviewEdit(APIView):
+
+    def post(self, request, pk):
+        review = Review.objects.get(id=pk)
+        serializer = ReviewSerializer(instance=review, data=request.data)
+# you can include partial=True so only one key can be updated
+        if serializer.is_valid():
+            serializer.save()
+
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        review = Review.objects.get(id=pk)
+        serializer = ReviewSerializer(instance=review, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+
+        return Response('item deleted')

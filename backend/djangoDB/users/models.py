@@ -85,3 +85,4 @@ class Review(models.Model):
     name = models.CharField(max_length=20, default=False)
     surname = models.CharField(max_length=20, default=False)
     is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)

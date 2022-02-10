@@ -3,7 +3,14 @@ import React from "react";
 import axios from "axios";
 import jwt from "jwt-decode";
 
-const Review = ({ shopId, userToken, name, surname, editReview }) => {
+const Review = ({
+  shopId,
+  userToken,
+  name,
+  surname,
+  setTriggerRender,
+  triggerRender,
+}) => {
   const [review, setReview] = useState("");
   const [rating, setRating] = useState("");
 
@@ -16,7 +23,6 @@ const Review = ({ shopId, userToken, name, surname, editReview }) => {
     surname: surname,
   };
   const handleSubmitReview = () => {
-    console.log(reviewerData);
     axios
       .post(
         `http://127.0.0.1:8000/users/merchants/shop/review/${shopId}/`,
@@ -30,6 +36,7 @@ const Review = ({ shopId, userToken, name, surname, editReview }) => {
       .catch((err) => {
         console.log(err);
       });
+    setTriggerRender(!triggerRender);
   };
 
   return (

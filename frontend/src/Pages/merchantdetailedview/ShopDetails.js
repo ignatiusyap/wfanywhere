@@ -10,6 +10,7 @@ import DisplayReview from "./DisplayReview";
 const ShopDetails = (props) => {
   const [allReviews, setAllReviews] = useState([]);
   const [userData, setUserData] = useState([]);
+  const [triggerRender, setTriggerRender] = useState(false);
   let { shopId } = useParams();
   const { userToken } = useContext(Statecontext);
   const shop = props.details;
@@ -36,7 +37,8 @@ const ShopDetails = (props) => {
           setUserData(res.data);
         }
       });
-  }, []);
+    setTriggerRender(true);
+  }, [triggerRender]);
   // const allReviewDetails = [];
   // const editReview = () => {};
   // const deleteReview = () => {};
@@ -76,6 +78,8 @@ const ShopDetails = (props) => {
         userToken={userToken}
         name={userData.name}
         surname={userData.surname}
+        triggerRender={triggerRender}
+        setTriggerRender={setTriggerRender}
       />
     </div>
   );
