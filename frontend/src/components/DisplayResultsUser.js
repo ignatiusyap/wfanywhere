@@ -2,10 +2,20 @@ import React from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const DisplayResultsUser = (props) => {
+  // useEffect(() => {
+  //   if (
+  //     window.location.href ===
+  //     `http://127.0.0.1:3000/users/merchants/shop/${props.apiCalledState.id}`
+  //   ) {
+  //     window.location.replace("http://127.0.0.1:3000/login");
+  //   }
+  // }, [props.userToken]);
   let history = useHistory();
   const clickForDetailedView = () => {
-    history.push(`merchants/shop/${props.apiCalledState.id}`);
-    props.liftState(props.apiCalledState);
+    if (props.userToken !== "") {
+      history.push(`merchants/shop/${props.apiCalledState.id}`);
+      props.liftState(props.apiCalledState);
+    }
   };
   return (
     <div onClick={clickForDetailedView}>

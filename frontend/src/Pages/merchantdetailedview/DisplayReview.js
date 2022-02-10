@@ -41,7 +41,7 @@ const DisplayReview = ({
     <>
       {allReviews?.map((each, index) => {
         return (
-          <div>
+          <>
             {allowEdit !== index ? (
               <div>
                 <div>
@@ -113,7 +113,7 @@ const DisplayReview = ({
                 </div>
               </div>
             )}
-          </div>
+          </>
         );
       })}
     </>

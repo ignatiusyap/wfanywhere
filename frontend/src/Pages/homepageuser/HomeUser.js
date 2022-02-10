@@ -27,6 +27,7 @@ const HomeUser = (props) => {
         apiCalledState={element}
         imgDescription="Shop Images"
         liftState={props.liftState}
+        userToken={props.userToken}
         key={uuidv4()}
       />
     );

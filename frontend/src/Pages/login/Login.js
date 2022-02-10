@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState, useReducer, useEffect, useContext } from "react";
 import { useHistory, Link } from "react-router-dom/cjs/react-router-dom.min";
 import Statecontext from "../../context/state-context";
-
+import "./login.css";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,8 +31,10 @@ const Login = () => {
   };
 
   return (
-    <>
-      <div>
+    <div class="container">
+      <div class="top"></div>
+      <div class="bottom"></div>
+      <div class="center">
         <form>
           <input
             type="email"
@@ -50,10 +52,10 @@ const Login = () => {
             }}
             placeholder="Password"
           />
+          <button onClick={handleLogin}>Login</button>
         </form>
       </div>
-      <button onClick={handleLogin}>Login</button>
-    </>
+    </div>
   );
 };
 
