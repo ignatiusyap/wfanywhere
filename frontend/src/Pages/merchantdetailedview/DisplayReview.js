@@ -7,6 +7,7 @@ const DisplayReview = ({
   userToken,
   triggerRender,
   setTriggerRender,
+  key,
 }) => {
   const editReview = (reviewId) => {
     axios
@@ -31,7 +32,7 @@ const DisplayReview = ({
       {allReviews !== [] &&
         allReviews.map((each) => {
           return (
-            <div>
+            <div key={key}>
               <div>
                 {each.name} {each.surname}
               </div>
