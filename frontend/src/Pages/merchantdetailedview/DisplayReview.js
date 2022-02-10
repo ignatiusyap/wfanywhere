@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import jwt from "jwt-decode";
 import axios from "axios";
 
@@ -9,12 +9,22 @@ const DisplayReview = ({
   setTriggerRender,
   key,
 }) => {
-  const editReview = (reviewId) => {
+  const [updateReview, setUpdateReview] = useState("");
+  const [updateRating, setUpdateRating] = useState("");
+  const [allowEdit, setAllowEdit] = useState("");
+
+  const submitReview = (reviewId) => {
+    const updatedReview = { review: updateReview, rating: updateRating };
+
     axios
       .post(
-        `http://127.0.0.1:8000/users/merchants/shop/editreview/${reviewId}/`
+        `http://127.0.0.1:8000/users/merchants/shop/editreview/${reviewId}/`,
+        updatedReview
       )
-      .then(() => {});
+      .then(() => {
+        setAllowEdit("");
+        setTriggerRender(!triggerRender);
+      });
   };
   const deleteReview = (reviewId) => {
     const deleteReview = { is_active: "False" };
@@ -29,24 +39,83 @@ const DisplayReview = ({
 
   return (
     <>
-      {allReviews !== [] &&
-        allReviews.map((each) => {
-          return (
-            <div key={key}>
+      {allReviews?.map((each, index) => {
+        return (
+          <div>
+            {allowEdit !== index ? (
               <div>
-                {each.name} {each.surname}
+                <div>
+                  {each.name} {each.surname}
+                </div>
+                <div>Review: {each.review}</div>
+                <div>Rating: {each.rating}</div>
+                <div>
+                  {each.user_id === jwt(userToken).user_id && (
+                    <>
+                      <button
+                        id={index}
+                        onClick={() => {
+                          setAllowEdit(index);
+                          setUpdateReview(each.review);
+                          setUpdateRating(each.rating);
+                        }}
+                      >
+                        Edit
+                      </button>
+                      <button onClick={() => deleteReview(each.id)}>
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
-              <div>Review: {each.review}</div>
-              <div>Rating{each.rating}</div>
-              {each.user_id === jwt(userToken).user_id && (
-                <>
-                  <button onClick={() => editReview(each.id)}>Edit</button>
-                  <button onClick={() => deleteReview(each.id)}>Delete</button>
-                </>
-              )}
-            </div>
-          );
-        })}
+            ) : (
+              <div>
+                <div>
+                  {each.name} {each.surname}
+                </div>
+                <input
+                  type="text"
+                  value={updateReview}
+                  onChange={(event) => {
+                    setUpdateReview(event.target.value);
+                  }}
+                  placeholder={each.review}
+                />
+                <input
+                  type="text"
+                  value={updateRating}
+                  onChange={(event) => {
+                    setUpdateRating(event.target.value);
+                  }}
+                  placeholder={each.rating}
+                />
+                <div>
+                  {each.user_id === jwt(userToken).user_id && (
+                    <>
+                      <button
+                        id={index}
+                        onClick={() => {
+                          submitReview(each.id);
+                        }}
+                      >
+                        Submit
+                      </button>
+                      <button
+                        onClick={() => {
+                          setAllowEdit("");
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </>
   );
 };
