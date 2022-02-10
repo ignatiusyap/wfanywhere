@@ -71,6 +71,8 @@ const ShopDetails = (props) => {
         key={uuidv4()}
         allReviews={allReviews}
         userToken={userToken}
+        triggerRender={triggerRender}
+        setTriggerRender={setTriggerRender}
       />
       <Review
         shopId={shopId}

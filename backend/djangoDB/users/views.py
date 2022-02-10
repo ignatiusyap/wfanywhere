@@ -71,6 +71,8 @@ class ReviewEdit(APIView):
 
         return Response(serializer.data)
 
+
+class ReviewDelete(APIView):
     def delete(self, request, pk):
         review = Review.objects.get(id=pk)
         serializer = ReviewSerializer(instance=review, data=request.data)

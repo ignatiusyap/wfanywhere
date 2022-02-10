@@ -2,17 +2,29 @@ import React from "react";
 import jwt from "jwt-decode";
 import axios from "axios";
 
-const DisplayReview = ({ allReviews, userToken }) => {
+const DisplayReview = ({
+  allReviews,
+  userToken,
+  triggerRender,
+  setTriggerRender,
+}) => {
   const editReview = (reviewId) => {
     axios
       .post(
         `http://127.0.0.1:8000/users/merchants/shop/editreview/${reviewId}/`
       )
-      .then((res) => {
-        console.log(res.data);
-      });
+      .then(() => {});
   };
-  const deleteReview = () => {};
+  const deleteReview = (reviewId) => {
+    const deleteReview = { is_active: "False" };
+    axios
+      .post(
+        `http://127.0.0.1:8000/users/merchants/shop/deletereview/${reviewId}/`,
+        deleteReview
+      )
+      .then(() => {});
+    setTriggerRender(!triggerRender);
+  };
 
   return (
     <>
@@ -28,7 +40,7 @@ const DisplayReview = ({ allReviews, userToken }) => {
               {each.user_id === jwt(userToken).user_id && (
                 <>
                   <button onClick={() => editReview(each.id)}>Edit</button>
-                  <button onClick={() => deleteReview}>Delete</button>
+                  <button onClick={() => deleteReview(each.id)}>Delete</button>
                 </>
               )}
             </div>
