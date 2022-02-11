@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from .serializers import *
 from .models import *
 from django.http import Http404, HttpResponse
-
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -19,6 +19,8 @@ class ShopAccountsData(APIView):
 
 
 class AccountDetails(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, pk):
         users = Account.objects.get(id=pk)
         serializer = AccountSerializer(users, many=False)
@@ -40,6 +42,7 @@ class AccountCreate(APIView):
 
 
 class ReviewsAll(APIView):
+
     def get(self, request, pk):
         reviews = Review.objects.filter(
             is_active=True, shop_id=pk).order_by('created_at')
@@ -70,6 +73,9 @@ class ReviewEdit(APIView):
             serializer.save()
 
         return Response(serializer.data)
+
+
+class ReviewDelete(APIView):
 
     def delete(self, request, pk):
         review = Review.objects.get(id=pk)

@@ -8,17 +8,37 @@ import HomeUser from "./Pages/homepageuser/HomeUser";
 import About from "./Pages/landingpage/About";
 import HomeMerchant from "./Pages/homepagemerchant/HomeMerchant";
 import ShopDetails from "./Pages/merchantdetailedview/ShopDetails";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Statecontext from "./context/state-context";
+import Header from "./components/Header";
 
 function App() {
   const [shopDetails, setShopDetails] = useState("");
   const [userToken, setUserToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
+
   const retrieveState = (state) => {
     setShopDetails(state);
   };
-
+  console.log(shopDetails.id);
+  useEffect(() => {
+    // if (
+    //   window.location.href ===
+    //     `http://127.0.0.1:3000/users/merchants/shop/${shopDetails.id}` &&
+    //   userToken === ""
+    // ) {
+    //   window.location.replace("http://127.0.0.1:3000/login");
+    // }
+    setTimeout(() => {
+      setUserToken("");
+      if (
+        window.location.href ===
+        `http://127.0.0.1:3000/users/merchants/shop/${shopDetails.id}`
+      ) {
+        window.location.replace("http://127.0.0.1:3000/login");
+      }
+    }, 1.2e6);
+  }, [userToken]);
   const config = {
     headers: { Authorization: `Bearer ${userToken}` },
   };
@@ -36,6 +56,7 @@ function App() {
               config,
             }}
           >
+            <Header userToken={userToken} setUserToken={setUserToken} />
             <Route exact path="/">
               <About />
             </Route>
@@ -49,7 +70,7 @@ function App() {
               <MerchantSignup />
             </Route>
             <Route exact path="/users/home">
-              <HomeUser liftState={retrieveState} />
+              <HomeUser liftState={retrieveState} userToken={userToken} />
             </Route>
             <Route exact path="/merchant/home">
               <HomeMerchant />

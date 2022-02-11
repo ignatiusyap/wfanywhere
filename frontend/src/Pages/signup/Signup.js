@@ -2,6 +2,7 @@
 import axios from "axios";
 import React, { useState, useReducer, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom/cjs/react-router-dom.min";
+import "./signup.css";
 
 // css modules
 
@@ -61,75 +62,90 @@ const Signup = () => {
   };
 
   return (
-    <>
-      <form>
-        <input
-          type="text"
-          value={input.name}
-          onChange={(event) => {
-            dispatchInput({
-              type: "Name",
-              payload: { input: event.target.value },
-            });
-          }}
-          placeholder="Name"
-        />
-        <input
-          type="text"
-          value={input.lastName}
-          onChange={(event) => {
-            dispatchInput({
-              type: "Surname",
-              payload: { input: event.target.value },
-            });
-          }}
-          placeholder="Surname"
-        />
-        <input
-          type="email"
-          value={input.email}
-          onChange={(event) => {
-            dispatchInput({
-              type: "Email",
-              payload: { input: event.target.value },
-            });
-          }}
-          placeholder="Email"
-        />
-        <input
-          type="text"
-          value={input.userName}
-          onChange={(event) => {
-            dispatchInput({
-              type: "Phone",
-              payload: { input: event.target.value },
-            });
-          }}
-          placeholder="Phone Number"
-        />
-        <input
-          type="password"
-          value={input.password}
-          onChange={(event) => {
-            dispatchInput({
-              type: "Password",
-              payload: { input: event.target.value },
-            });
-          }}
-          placeholder="Password"
-        />
-        <input
-          type="password"
-          value={retypePassword}
-          onChange={(event) => {
-            setRetypePassword(event.target.value);
-          }}
-          placeholder="Retype Password"
-        />
-      </form>
-      <button onClick={passwordValidation}>Sign Up</button>
-      {console.log(input)}
-    </>
+    <div class="form-body">
+      <div class="row">
+        <div class="form-holder">
+          <div class="form-content">
+            <div class="form-items">
+              <h3>Members Signup</h3>
+              <form>
+                <input
+                  class="form-control"
+                  type="text"
+                  value={input.name}
+                  onChange={(event) => {
+                    dispatchInput({
+                      type: "Name",
+                      payload: { input: event.target.value },
+                    });
+                  }}
+                  placeholder="Name"
+                />
+                <input
+                  class="form-control"
+                  type="text"
+                  value={input.lastName}
+                  onChange={(event) => {
+                    dispatchInput({
+                      type: "Surname",
+                      payload: { input: event.target.value },
+                    });
+                  }}
+                  placeholder="Surname"
+                />
+                <input
+                  class="form-control"
+                  type="email"
+                  value={input.email}
+                  onChange={(event) => {
+                    dispatchInput({
+                      type: "Email",
+                      payload: { input: event.target.value },
+                    });
+                  }}
+                  placeholder="Email"
+                />
+                <input
+                  type="text"
+                  value={input.userName}
+                  onChange={(event) => {
+                    dispatchInput({
+                      type: "Phone",
+                      payload: { input: event.target.value },
+                    });
+                  }}
+                  placeholder="Phone Number"
+                />
+                <input
+                  class="form-control"
+                  type="password"
+                  value={input.password}
+                  onChange={(event) => {
+                    dispatchInput({
+                      type: "Password",
+                      payload: { input: event.target.value },
+                    });
+                  }}
+                  placeholder="Password"
+                />
+                <input
+                  class="form-control"
+                  type="password"
+                  value={retypePassword}
+                  onChange={(event) => {
+                    setRetypePassword(event.target.value);
+                  }}
+                  placeholder="Retype Password"
+                />
+                <button class="signupbutton" onClick={passwordValidation}>
+                  Sign Up
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
