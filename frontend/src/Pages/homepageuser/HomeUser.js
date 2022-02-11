@@ -36,10 +36,9 @@ const HomeUser = (props) => {
 
   return (
     <>
-      <div>Homeuser</div>
       {/* <DisplayResultsUser apiCalledState={} title ="Most Visited"/> */}
       <div>
-        <div className="display-results-header">Explore New Places</div>
+        <h2>Explore New Spaces</h2>
         {randomShops}
       </div>
 

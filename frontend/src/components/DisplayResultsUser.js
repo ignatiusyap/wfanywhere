@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-
+import "./displayresultsuser.css";
 const DisplayResultsUser = (props) => {
   // useEffect(() => {
   //   if (
@@ -18,12 +18,22 @@ const DisplayResultsUser = (props) => {
     }
   };
   return (
-    <div onClick={clickForDetailedView}>
-      <div>
-        <img src={props.apiCalledState.image_url} alt={props.imgDescription} />
-      </div>
-      <div>
-        <div className="result-header">{props.apiCalledState.shop_name}</div>
+    <div class="shopcontainer">
+      <div class="card">
+        <div class="face face1" onClick={clickForDetailedView}>
+          <div class="content">
+            <h2 class="details">{props.apiCalledState.shop_name}</h2>
+            {props.userToken === "" && (
+              <p class="details">Log in to click for more details</p>
+            )}
+          </div>
+          <div class="face face2">
+            <img
+              src={props.apiCalledState.image_url}
+              alt={props.imgDescription}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

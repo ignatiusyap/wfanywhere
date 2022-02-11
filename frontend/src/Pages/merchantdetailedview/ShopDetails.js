@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import Statecontext from "../../context/state-context";
 import jwt from "jwt-decode";
 import DisplayReview from "./DisplayReview";
+import "./shopdetails.css";
 
 const ShopDetails = (props) => {
   const [allReviews, setAllReviews] = useState([]);
@@ -62,9 +63,13 @@ const ShopDetails = (props) => {
 
   return (
     <div>
-      <div>{shop.shop_name}</div>
+      <h2>{shop.shop_name}</h2>
       <div>
         <img src={shop.image_url} alt="shop" />
+      </div>
+      <div>
+        <h4>Description: {shop.description}</h4>
+        <h4>No of sockets: {shop.no_of_sockets}</h4>
       </div>
       {/* <div>{allReviewDetails}</div> */}
       <DisplayReview

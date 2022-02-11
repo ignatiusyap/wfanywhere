@@ -156,7 +156,9 @@ const MerchantSignup = () => {
                     }}
                     placeholder="Retype Password"
                   />
-                  <button onClick={passwordValidation}>Sign Up</button>
+                  <button class="signupbutton" onClick={passwordValidation}>
+                    Sign Up
+                  </button>
                 </form>
               </div>
             </div>

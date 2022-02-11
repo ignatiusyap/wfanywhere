@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./header.css";
 
 const Header = ({ userToken, setUserToken }) => {
   const handleLogout = () => {
@@ -27,11 +28,11 @@ const Header = ({ userToken, setUserToken }) => {
 
   return (
     <>
-      <div>
+      <div id="mainroutes">
         {linkAbout}
         {linkSpaces}
       </div>
-      <div>
+      <div id="conditionalroutes">
         {!userToken && linkLogin}
         {userToken && linkLogout}
         {!userToken && linkMerchantSignUp}
