@@ -29,7 +29,8 @@ const ShopDetails = (props) => {
 
     axios
       .get(
-        `http://127.0.0.1:8000/users/profile-page/${jwt(userToken).user_id}/`
+        `http://127.0.0.1:8000/users/profile-page/${jwt(userToken).user_id}/`,
+        props.config
       )
       .then((res) => {
         if (!res.data) {
