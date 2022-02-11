@@ -76,7 +76,7 @@ function App() {
               <HomeMerchant />
             </Route>
             <Route exact path={`/users/merchants/shop/:shopId`}>
-              <ShopDetails details={shopDetails} />
+              <ShopDetails details={shopDetails} config={config} />
             </Route>
           </Statecontext.Provider>
         </Switch>
