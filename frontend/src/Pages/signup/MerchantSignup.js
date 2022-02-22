@@ -1,7 +1,7 @@
 // dependencies
 import axios from "axios";
-import React, { useState, useReducer, useEffect } from "react";
-import { useHistory, Link } from "react-router-dom/cjs/react-router-dom.min";
+import React, { useState, useReducer } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "./signup.css";
 // css modules
 
@@ -30,6 +30,7 @@ const MerchantSignup = () => {
 
   const [shopName, setShopName] = useState("");
   const [retypePassword, setRetypePassword] = useState("");
+  const [promptUser, setPromptUser] = useState("");
   const [input, dispatchInput] = useReducer(changeInput, {
     user_type: "Merchant",
     name: "",
@@ -42,22 +43,27 @@ const MerchantSignup = () => {
 
   const passwordValidation = (e) => {
     e.preventDefault();
-    if (input.password !== retypePassword) {
-      alert("Password do not match");
+
+    if (Object.values(input).every((value) => value !== "")) {
+      if (input.password !== retypePassword) {
+        setPromptUser(false);
+      } else {
+        const shopNameToSendBack = { shop_name: shopName };
+        axios
+          .post(
+            "http://localhost:8000/users/merchants/shop-name/",
+            shopNameToSendBack
+          )
+          .then((res) => {
+            if (!res.data) {
+              alert("Something wrong");
+            } else {
+              handleSignUp(res.data.id);
+            }
+          });
+      }
     } else {
-      const shopNameToSendBack = { shop_name: shopName };
-      axios
-        .post(
-          "http://localhost:8000/users/merchants/shop-name/",
-          shopNameToSendBack
-        )
-        .then((res) => {
-          if (!res.data) {
-            alert("Something wrong");
-          } else {
-            handleSignUp(res.data.id);
-          }
-        });
+      setPromptUser(true);
     }
   };
   const handleSignUp = (id) => {
@@ -159,6 +165,13 @@ const MerchantSignup = () => {
                   <button class="signupbutton" onClick={passwordValidation}>
                     Sign Up
                   </button>
+                  {promptUser === true ? (
+                    <p>Please ensure all fields are filled up!</p>
+                  ) : promptUser === false ? (
+                    <p>Passwords do not match!</p>
+                  ) : (
+                    <></>
+                  )}
                 </form>
               </div>
             </div>

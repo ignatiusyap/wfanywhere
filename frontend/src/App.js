@@ -20,7 +20,7 @@ function App() {
   const retrieveState = (state) => {
     setShopDetails(state);
   };
-  console.log(shopDetails.id);
+  //console.log(shopDetails.id);
   useEffect(() => {
     // if (
     //   window.location.href ===

@@ -30,6 +30,7 @@ const changeInput = (input, action) => {
 const Signup = () => {
   let history = useHistory();
   const [retypePassword, setRetypePassword] = useState("");
+  const [promptUser, setPromptUser] = useState("");
   const [input, dispatchInput] = useReducer(changeInput, {
     shop_id: "",
     user_type: "User",
@@ -43,10 +44,18 @@ const Signup = () => {
 
   const passwordValidation = (e) => {
     e.preventDefault();
-    if (input.password !== retypePassword) {
-      alert("Password do not match");
+    if (
+      Object.values(input)
+        .slice(1)
+        .every((value) => value !== "")
+    ) {
+      if (input.password !== retypePassword) {
+        setPromptUser(false);
+      } else {
+        handleSignUp();
+      }
     } else {
-      handleSignUp();
+      setPromptUser(true);
     }
   };
   const handleSignUp = () => {
@@ -140,6 +149,13 @@ const Signup = () => {
                 <button class="signupbutton" onClick={passwordValidation}>
                   Sign Up
                 </button>
+                {promptUser === true ? (
+                  <p>Please ensure all fields are filled up!</p>
+                ) : promptUser === false ? (
+                  <p>Passwords do not match!</p>
+                ) : (
+                  <></>
+                )}
               </form>
             </div>
           </div>
