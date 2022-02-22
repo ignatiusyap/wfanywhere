@@ -1,0 +1,14 @@
+[
+  {
+    "model": "users.Type",
+    "fields": {
+      "userType": "User"
+    }
+  },
+  {
+    "model": "users.Type",
+    "fields": {
+      "userType": "Merchant"
+    }
+  }
+]
