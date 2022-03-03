@@ -1,7 +1,8 @@
 // dependencies
 import axios from "axios";
-import React, { useState, useReducer, useEffect } from "react";
-import { useHistory, Link } from "react-router-dom/cjs/react-router-dom.min";
+import React, { useState, useReducer, useContext } from "react";
+import Statecontext from "../../context/state-context";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "./signup.css";
 
 // css modules
@@ -30,6 +31,8 @@ const changeInput = (input, action) => {
 const Signup = () => {
   let history = useHistory();
   const [retypePassword, setRetypePassword] = useState("");
+  const [promptUser, setPromptUser] = useState("");
+  const { setUserToken, setRefreshToken } = useContext(Statecontext);
   const [input, dispatchInput] = useReducer(changeInput, {
     shop_id: "",
     user_type: "User",
@@ -43,20 +46,45 @@ const Signup = () => {
 
   const passwordValidation = (e) => {
     e.preventDefault();
-    if (input.password !== retypePassword) {
-      alert("Password do not match");
+    if (
+      Object.values(input)
+        .slice(1)
+        .every((value) => value !== "")
+    ) {
+      if (input.password !== retypePassword) {
+        setPromptUser(false);
+      } else {
+        handleSignUp();
+      }
     } else {
-      handleSignUp();
+      setPromptUser(true);
     }
+  };
+  const handleLogin = () => {
+    const dataSendToBackEnd = {
+      email: input.email,
+      password: input.password,
+    };
+    axios
+      .post("http://127.0.0.1:8000/jwt/token/", dataSendToBackEnd)
+      .then((res) => {
+        if (!res.data) {
+          alert("Something wrong");
+        } else {
+          setUserToken(res.data.access);
+          setRefreshToken(res.data.refresh);
+          history.push("/users/home");
+        }
+      });
   };
   const handleSignUp = () => {
     axios
       .post("http://localhost:8000/users/create-account/", input)
       .then((res) => {
-        if (!res.data) {
-          alert("Something wrong");
+        if (res.data === "Account not created") {
+          alert("Account not created. Email address taken!");
         } else {
-          history.push("/");
+          handleLogin();
         }
       });
   };
@@ -140,6 +168,13 @@ const Signup = () => {
                 <button class="signupbutton" onClick={passwordValidation}>
                   Sign Up
                 </button>
+                {promptUser === true ? (
+                  <p>Please ensure all fields are filled up!</p>
+                ) : promptUser === false ? (
+                  <p>Passwords do not match!</p>
+                ) : (
+                  <></>
+                )}
               </form>
             </div>
           </div>

@@ -1,7 +1,7 @@
 // dependencies
 import axios from "axios";
-import React, { useState, useReducer, useEffect, useContext } from "react";
-import { useHistory, Link } from "react-router-dom/cjs/react-router-dom.min";
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Statecontext from "../../context/state-context";
 import "./login.css";
 const Login = () => {

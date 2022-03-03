@@ -32,3 +32,5 @@ class MerchantCreate(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+        else:
+            return Response("Shop not created")
