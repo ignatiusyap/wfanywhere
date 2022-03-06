@@ -10,7 +10,7 @@ const HomeUser = (props) => {
   const [shops, setShops] = useState([]);
   const callShops = () => {
     axios
-      .get("http://localhost:8000/users/merchants/all-shops/")
+      .get("https://wfanywhere.herokuapp.com/users/merchants/all-shops/")
       .then((res) => {
         if (!res.data) {
           alert("Something wrong");
