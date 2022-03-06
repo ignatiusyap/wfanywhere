@@ -33,9 +33,9 @@ function App() {
       setUserToken("");
       if (
         window.location.href ===
-        `http://127.0.0.1:3000/users/merchants/shop/${shopDetails.id}`
+        `https://wfanywhere.herokuapp.com/users/merchants/shop/${shopDetails.id}`
       ) {
-        window.location.replace("http://127.0.0.1:3000/login");
+        window.location.replace("https://wfanywhere.herokuapp.com/login");
       }
     }, 1.2e6);
   }, [userToken]);

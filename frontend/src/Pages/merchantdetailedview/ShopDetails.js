@@ -18,7 +18,9 @@ const ShopDetails = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/users/merchants/shop/review/${shopId}/`)
+      .get(
+        `https://wfanywhere.herokuapp.com/users/merchants/shop/review/${shopId}/`
+      )
       .then((res) => {
         if (!res.data) {
           alert("backend issue");
@@ -29,7 +31,9 @@ const ShopDetails = (props) => {
 
     axios
       .get(
-        `http://127.0.0.1:8000/users/profile-page/${jwt(userToken).user_id}/`,
+        `https://wfanywhere.herokuapp.com/users/profile-page/${
+          jwt(userToken).user_id
+        }/`,
         props.config
       )
       .then((res) => {

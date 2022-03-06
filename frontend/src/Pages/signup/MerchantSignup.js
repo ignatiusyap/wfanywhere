@@ -57,7 +57,7 @@ const MerchantSignup = () => {
         const shopNameToSendBack = { shop_name: shopName };
         axios
           .post(
-            "http://localhost:8000/users/merchants/shop-name/",
+            "https://wfanywhere.herokuapp.com/users/merchants/shop-name/",
             shopNameToSendBack
           )
           .then((res) => {
@@ -79,7 +79,7 @@ const MerchantSignup = () => {
       password: input.password,
     };
     axios
-      .post("http://127.0.0.1:8000/jwt/token/", dataSendToBackEnd)
+      .post("https://wfanywhere.herokuapp.com/jwt/token/", dataSendToBackEnd)
       .then((res) => {
         if (!res.data) {
           alert("Something wrong");
@@ -96,7 +96,10 @@ const MerchantSignup = () => {
       shop_id: id,
     };
     axios
-      .post("http://localhost:8000/users/create-account/", finalInputSendBack)
+      .post(
+        "https://wfanywhere.herokuapp.com/users/create-account/",
+        finalInputSendBack
+      )
       .then((res) => {
         if (res.data === "Account not created") {
           alert("Account not created. Email address is taken!");

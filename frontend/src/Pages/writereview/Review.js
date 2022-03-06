@@ -25,7 +25,7 @@ const Review = ({
   const handleSubmitReview = () => {
     axios
       .post(
-        `http://127.0.0.1:8000/users/merchants/shop/review/${shopId}/`,
+        `https://wfanywhere.herokuapp.com/users/merchants/shop/review/${shopId}/`,
         reviewerData
       )
       .then((res) => {

@@ -18,7 +18,7 @@ const Login = () => {
       password: password,
     };
     axios
-      .post("http://127.0.0.1:8000/jwt/token/", dataSendToBackEnd)
+      .post("https://wfanywhere.herokuapp.com/jwt/token/", dataSendToBackEnd)
       .then((res) => {
         if (!res.data) {
           alert("Something wrong");

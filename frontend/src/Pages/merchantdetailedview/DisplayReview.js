@@ -18,7 +18,7 @@ const DisplayReview = ({
 
     axios
       .post(
-        `http://127.0.0.1:8000/users/merchants/shop/editreview/${reviewId}/`,
+        `https://wfanywhere.herokuapp.com/users/merchants/shop/editreview/${reviewId}/`,
         updatedReview
       )
       .then(() => {
@@ -30,7 +30,7 @@ const DisplayReview = ({
     const deleteReview = { is_active: "False" };
     axios
       .post(
-        `http://127.0.0.1:8000/users/merchants/shop/deletereview/${reviewId}/`,
+        `https://wfanywhere.herokuapp.com/users/merchants/shop/deletereview/${reviewId}/`,
         deleteReview
       )
       .then(() => {});
